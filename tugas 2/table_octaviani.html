@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal Kuliah</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f7f9fc;
+        padding: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+        color: #333;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 90%;
+        max-width: 900px;
+        margin: 0 auto 30px auto;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 12px 15px;
+        text-align: center;
+      }
+
+      thead th {
+        background-color: #3f72af;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      tbody td {
+        color: #333;
+        background-color: #fafafa;
+      }
+
+      tbody tr:nth-child(even) td {
+        background-color: #f1f5f9;
+      }
+
+      tbody tr:hover td {
+        background-color: #e8f0fe;
+      }
+
+      tfoot td {
+        background-color: #3f72af;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        font-size: 0.95rem;
+      }
+
+      td[rowspan] {
+        vertical-align: middle;
+        font-weight: 500;
+        background-color: #f9fafb;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Jadwal Perkuliahan</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Hari</th>
+          <th>Jam</th>
+          <th>Mata Kuliah</th>
+          <th>Dosen</th>
+          <th>Ruang</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">Senin</td>
+          <td>08.00 - 10.00</td>
+          <td>Kajian Islam</td>
+          <td>Ust. Anwar Nashidin, Lc.</td>
+          <td>Ruang Teori</td>
+        </tr>
+        <tr>
+          <td>10.00 - 12.00</td>
+          <td>Aplikasi Perkantoran</td>
+          <td>Drs. MGS Hendri, M.M</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Selasa</td>
+          <td>08.00 - 10.00</td>
+          <td>Linux Fundamental</td>
+          <td>Henry Saptono, S.Si, M.Kom</td>
+          <td rowspan="2">Ruang I</td>
+        </tr>
+        <tr>
+          <td>10.00 - 12.00</td>
+          <td>HTML, CSS & Javascript</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Rabu</td>
+          <td>08.00 - 10.00</td>
+          <td>Basis Data</td>
+          <td rowspan="2">Sirojul Munir, S.Si, M.Kom</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>10.00 - 12.00</td>
+          <td>Algoritma dan Pemrograman</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Kamis</td>
+          <td>08.00 - 10.00</td>
+          <td>Kewirausahaan & Pengembangan Diri</td>
+          <td>Khoirul Umam, S.Pd</td>
+          <td>Ruang Teori</td>
+        </tr>
+        <tr>
+          <td>10.00 - 12.00</td>
+          <td>Bahasa Inggris</td>
+          <td>Drs. Mahfudz</td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5">Jadwal dapat berubah sewaktu-waktu</td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
+</html>
