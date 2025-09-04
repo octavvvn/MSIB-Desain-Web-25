@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+      body {
+        margin: 0;
+        padding: 25px 0; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px; 
+        background: #f9f9f9;
+        font-family: "Poppins", sans-serif;
+      }
+      a {
+        padding: 10px 22px;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #6c63ff, #ff6b6b, #00c9a7);
+        background-size: 200% 200%;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: all 0.4s ease;
+      }
+      a:hover {
+        background-position: right center;
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="home.html" target="main">Home</a>
+    <a href="study.html" target="main">MyStudy</a>
+    <a href="gallery.html" target="main">Gallery</a>
+  </body>
+</html>
