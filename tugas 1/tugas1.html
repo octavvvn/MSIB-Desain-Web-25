@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tugas 1 - JavaScript</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #d9a7c7, #fffcdc);
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: purple;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: teal;
+      font-size: 18px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 style="text-align: center;">Hitung-Hitung Luas Bangun Datar</h1>
+  <p style="text-align: center;">
+    Coba deh buka console (F12 → tab Console) buat liat hasil hitungannya</p>
+
+  <script>
+    //menghitung luas persegi panjang
+    //panjang * lebar
+    function luasPersegiPanjang(panjang, lebar) {
+      return panjang * lebar;
+    }
+
+    //menghitung luas bujur sangkar
+    //sisi * sisi
+    function luasBujurSangkar(sisi) {
+      return sisi * sisi;
+    }
+
+    //menghitung luas segitiga
+    //1/2 * alas * tinggi
+    function luasSegitiga(alas, tinggi) {
+      return 0.5 * alas * tinggi;
+    }
+
+    //contoh nilai
+    let panjang = 5;
+    let lebar = 5;
+    let sisi = 7;
+    let alas = 9;
+    let tinggi = 4;
+
+    //menampilkan hasil di console
+    console.log("Luas Persegi Panjang =", luasPersegiPanjang(panjang, lebar));
+    console.log("Luas Bujur Sangkar =", luasBujurSangkar(sisi));
+    console.log("Luas Segitiga =", luasSegitiga(alas, tinggi));
+  </script>
+</body>
+
+</html>
