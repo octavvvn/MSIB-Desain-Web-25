@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tugas 5 - Javascript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f3f6fa;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+      }
+
+      h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        padding: 10px 18px;
+        margin: 5px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      #btnTampil {
+        background: #3498db;
+        color: white;
+      }
+      #btnTambah {
+        background: #2ecc71;
+        color: white;
+      }
+      #btnHapus {
+        background: #e74c3c;
+        color: white;
+      }
+
+      .btn:hover {
+        opacity: 0.85;
+        transform: scale(1.05);
+      }
+
+      #output {
+        margin-top: 25px;
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 320px;
+        min-height: 150px;
+        white-space: pre-wrap;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Manajemen Produk</h2>
+    <div>
+      <button id="btnTampil" class="btn">Tampilkan Produk</button>
+      <button id="btnTambah" class="btn">Tambah Produk</button>
+      <button id="btnHapus" class="btn">Hapus Produk</button>
+    </div>
+
+    <pre id="output"></pre>
+
+    <script>
+      //data produk
+      let produkList = [
+        { id: 1, nama: "Laptop", harga: 14500000 },
+        { id: 2, nama: "Smartphone", harga: 5500000 },
+        { id: 3, nama: "Tablet", harga: 7300000 },
+        { id: 4, nama: "Headphone", harga: 2500000 },
+        { id: 5, nama: "Keyboard", harga: 450000 },
+      ];
+
+      //tambah produk dengan spread operator
+      function tambahProduk(id, nama, harga) {
+        produkList = [...produkList, { id, nama, harga }];
+      }
+
+      //hapus produk dengan rest parameter
+      function hapusProduk(...id) {
+        produkList = produkList.filter((p) => !id.includes(p.id));
+      }
+
+      //tampilkan produk dengan destructuring**
+      function tampilkanProduk() {
+        let hasil = "📋 Daftar Produk:\n\n";
+        for (let { id, nama, harga } of produkList) {
+          hasil += `🔹 ID: ${id}\n   Nama: ${nama}\n   Harga: Rp${harga}\n\n`;
+        }
+        document.getElementById("output").textContent = hasil;
+      }
+
+      //event handler
+      const eventHandler = {
+        tampil: () => tampilkanProduk(),
+        tambah: () => {
+          tambahProduk(6, "Mouse", 150000);
+          tampilkanProduk();
+        },
+        hapus: () => {
+          hapusProduk(2, 4); //hapus produk id 2 dan 4
+          tampilkanProduk();
+        },
+      };
+
+      //event listener
+      document
+        .getElementById("btnTampil")
+        .addEventListener("click", eventHandler.tampil);
+      document
+        .getElementById("btnTambah")
+        .addEventListener("click", eventHandler.tambah);
+      document
+        .getElementById("btnHapus")
+        .addEventListener("click", eventHandler.hapus);
+
+      //tampilkan produk pertama kali
+      tampilkanProduk();
+    </script>
+  </body>
+</html>
