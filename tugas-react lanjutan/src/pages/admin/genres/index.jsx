@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getGenres } from "../../../_services/genres";
+import { getGenres, deleteGenre } from "../../../_services/genres";
 
 export default function AdminGenres() {
   const [genres, setGenres] = useState([]);
@@ -17,6 +17,17 @@ export default function AdminGenres() {
     };
     fetchData();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (!confirm("Yakin mau hapus genre ini?")) return;
+    try {
+      await deleteGenre(id);
+      setGenres((prev) => prev.filter((g) => g.id !== id)); // hapus dari list tanpa reload
+    } catch (err) {
+      console.error("Failed to delete genre:", err);
+      alert("Gagal hapus genre");
+    }
+  };
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
@@ -53,6 +64,7 @@ export default function AdminGenres() {
               <tr>
                 <th className="px-4 py-3 w-16 text-center">#</th>
                 <th className="px-4 py-3">Genre Name</th>
+                <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -68,12 +80,30 @@ export default function AdminGenres() {
                     <td className="px-4 py-3 text-gray-900 dark:text-white">
                       {genre.name}
                     </td>
+                    <td className="px-4 py-3 text-center">
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() =>
+                            navigate(`/admin/genres/${genre.id}/edit`)
+                          }
+                          className="text-sm px-3 py-1 rounded-md bg-yellow-500 text-white hover:bg-yellow-600"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(genre.id)}
+                          className="text-sm px-3 py-1 rounded-md bg-red-600 text-white hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td
-                    colSpan="2"
+                    colSpan="3"
                     className="text-center py-6 text-gray-400 dark:text-gray-500"
                   >
                     No genres found

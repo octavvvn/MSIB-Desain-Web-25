@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuthors } from "../../../_services/authors";
+import { getAuthors, deleteAuthor } from "../../../_services/authors";
 
 export default function AdminAuthors() {
   const [authors, setAuthors] = useState([]);
   const navigate = useNavigate();
 
+  // ambil data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAuthors();
-        setAuthors(data);
+        const res = await getAuthors();
+        setAuthors(res);
       } catch (err) {
         console.error("Failed to fetch authors:", err);
       }
     };
     fetchData();
   }, []);
+
+  // hapus data
+  const handleDelete = async (id) => {
+    if (!confirm("Yakin mau hapus author ini?")) return;
+    try {
+      await deleteAuthor(id);
+      setAuthors((prev) => prev.filter((a) => a.id !== id)); // update tampilan tanpa reload
+    } catch (err) {
+      console.error("Failed to delete author:", err);
+      alert("Gagal hapus author");
+    }
+  };
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
@@ -53,6 +66,7 @@ export default function AdminAuthors() {
               <tr>
                 <th className="px-4 py-3 w-16 text-center">#</th>
                 <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -68,12 +82,30 @@ export default function AdminAuthors() {
                     <td className="px-4 py-3 text-gray-900 dark:text-white">
                       {author.name}
                     </td>
+                    <td className="px-4 py-3 text-center">
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() =>
+                            navigate(`/admin/authors/${author.id}/edit`)
+                          }
+                          className="text-sm px-3 py-1 rounded-md bg-yellow-500 text-white hover:bg-yellow-600"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(author.id)}
+                          className="text-sm px-3 py-1 rounded-md bg-red-600 text-white hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td
-                    colSpan="2"
+                    colSpan="3"
                     className="text-center py-6 text-gray-400 dark:text-gray-500"
                   >
                     No authors found

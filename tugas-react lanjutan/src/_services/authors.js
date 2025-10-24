@@ -16,6 +16,37 @@ export async function addAuthor(author) {
     return response.data;
   } catch (err) {
     console.error("Failed to add author:", err);
-    throw err; // biar bisa ditangkap di create.jsx
+    throw err;
+  }
+}
+
+// menambahkan 
+export async function getAuthorById(id) {
+  try {
+    const response = await api.get(`/authors/${id}`);
+    return response.data.data;
+  } catch (err) {
+    console.error("Failed to fetch author by id:", err);
+    throw err;
+  }
+}
+
+export async function updateAuthor(id, author) {
+  try {
+    const response = await api.put(`/authors/${id}`, author);
+    return response.data;
+  } catch (err) {
+    console.error("Failed to update author:", err);
+    throw err;
+  }
+}
+
+export async function deleteAuthor(id) {
+  try {
+    const response = await api.delete(`/authors/${id}`);
+    return response.data;
+  } catch (err) {
+    console.error("Failed to delete author:", err);
+    throw err;
   }
 }

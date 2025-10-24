@@ -15,11 +15,14 @@ import Dashboard from "./pages/admin";
 import AdminBooks from "./pages/admin/books";
 import BookCreate from "./pages/admin/books/create";
 
-// ✳️ Tambahan Authors & Genres
+// ✳️ Authors & Genres
 import AdminAuthors from "./pages/admin/authors";
 import AuthorCreate from "./pages/admin/authors/create";
+import EditAuthor from "./pages/admin/authors/edit";
+
 import AdminGenres from "./pages/admin/genres";
 import GenreCreate from "./pages/admin/genres/create";
+import EditGenre from "./pages/admin/genres/edit";
 
 function App() {
   return (
@@ -39,21 +42,25 @@ function App() {
           {/* Admin */}
           <Route path="admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
+
+            {/* Books */}
             <Route path="books">
               <Route index element={<AdminBooks />} />
               <Route path="create" element={<BookCreate />} />
             </Route>
 
-            {/* ✳️ Authors */}
+            {/* Authors */}
             <Route path="authors">
               <Route index element={<AdminAuthors />} />
               <Route path="create" element={<AuthorCreate />} />
+              <Route path=":id/edit" element={<EditAuthor />} /> {/* NEW */}
             </Route>
 
-            {/* ✳️ Genres */}
+            {/* Genres */}
             <Route path="genres">
               <Route index element={<AdminGenres />} />
               <Route path="create" element={<GenreCreate />} />
+              <Route path=":id/edit" element={<EditGenre />} /> {/* NEW */}
             </Route>
           </Route>
         </Routes>
@@ -63,4 +70,3 @@ function App() {
 }
 
 export default App;
-
