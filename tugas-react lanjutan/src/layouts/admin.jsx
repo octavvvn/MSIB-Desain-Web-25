@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { logoutUser } from "../_services/auth"; 
 
 export default function AdminLayout() {
   return (
@@ -282,6 +283,32 @@ export default function AdminLayout() {
                   </svg>
                   <span className="ml-3">Help</span>
                 </a>
+              </li>
+              <li>
+                <button
+                  onClick={async () => {
+                    await logoutUser();
+                    window.location.href = "/login";
+                  }}
+                  className="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-red-100 dark:hover:bg-red-700 dark:text-white group"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="flex-shrink-0 w-6 h-6 text-red-600 transition duration-75 dark:text-red-400 group-hover:text-red-700 dark:group-hover:text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 4a1 1 0 011-1h6a1 1 0 010 2H5v10h5a1 1 0 110 2H4a1 1 0 01-1-1V4zm9.707 1.293a1 1 0 010 1.414L10.414 9H17a1 1 0 110 2h-6.586l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                  <span className="ml-3 text-red-600 dark:text-red-400 font-semibold">
+                    Logout
+                  </span>
+                </button>
               </li>
             </ul>
           </div>

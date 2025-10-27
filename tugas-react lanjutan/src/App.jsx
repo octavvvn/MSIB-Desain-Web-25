@@ -14,6 +14,8 @@ import AdminLayout from "./layouts/admin";
 import Dashboard from "./pages/admin";
 import AdminBooks from "./pages/admin/books";
 import BookCreate from "./pages/admin/books/create";
+import EditBook from "./pages/admin/books/edit";
+
 
 // ✳️ Authors & Genres
 import AdminAuthors from "./pages/admin/authors";
@@ -44,10 +46,12 @@ function App() {
             <Route index element={<Dashboard />} />
 
             {/* Books */}
-            <Route path="books">
-              <Route index element={<AdminBooks />} />
-              <Route path="create" element={<BookCreate />} />
-            </Route>
+<Route path="books">
+  <Route index element={<AdminBooks />} />
+  <Route path="create" element={<BookCreate />} />
+  <Route path=":id/edit" element={<EditBook />} /> {/* 🆕 Tambah ini */}
+</Route>
+
 
             {/* Authors */}
             <Route path="authors">

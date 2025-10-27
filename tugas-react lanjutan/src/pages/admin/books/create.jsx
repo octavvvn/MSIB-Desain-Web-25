@@ -1,98 +1,185 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getBooks } from "../../../_services/books";
+import { addBook } from "../../../_services/books";
 
-export default function AdminBooks() {
-  const [books, setBooks] = useState([]);
+export default function CreateBook() {
+  const [formData, setFormData] = useState({
+    title: "",
+    author: "",
+    genre: "",
+    price: "",
+    description: "",
+  });
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getBooks();
-        setBooks(data);
-      } catch (err) {
-        console.error("Failed to fetch books:", err);
-      }
-    };
-    fetchData();
-  }, []);
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      await addBook(formData);
+      setMessage("✅ Book added successfully!");
+      setFormData({
+        title: "",
+        author: "",
+        genre: "",
+        price: "",
+        description: "",
+      });
+      setTimeout(() => navigate("/admin/books"), 1200);
+    } catch (err) {
+      console.error("Error adding book:", err);
+      setMessage("❌ Failed to add book. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-      <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-        {/* Top bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between p-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Book List
-          </h2>
-          <button
-            onClick={() => navigate("/admin/books/create")}
-            className="flex items-center justify-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700"
-          >
-            <svg
-              className="h-3.5 w-3.5 mr-2"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clipRule="evenodd"
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              />
-            </svg>
-            Add Book
-          </button>
-        </div>
+      <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg max-w-2xl mx-auto p-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+          Add New Book
+        </h2>
 
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th className="px-4 py-3">Title</th>
-                <th className="px-4 py-3">Genre</th>
-                <th className="px-4 py-3">Author</th>
-                <th className="px-4 py-3">Description</th>
-                <th className="px-4 py-3">Price</th>
-                <th className="px-4 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {books.length > 0 ? (
-                books.map((book) => (
-                  <tr key={book.id} className="border-b dark:border-gray-700">
-                    <td className="px-4 py-3 text-gray-900 dark:text-white">
-                      {book.title}
-                    </td>
-                    <td className="px-4 py-3">{book.genre?.name || "-"}</td>
-                    <td className="px-4 py-3">{book.author?.name || "-"}</td>
-                    <td className="px-4 py-3">{book.description || "-"}</td>
-                    <td className="px-4 py-3">{book.price || "-"}</td>
-                    <td className="px-4 py-3 text-right space-x-2">
-                      <button className="text-blue-600 hover:underline">
-                        Edit
-                      </button>
-                      <button className="text-red-600 hover:underline">
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="6"
-                    className="text-center py-6 text-gray-400 dark:text-gray-500"
-                  >
-                    No books found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        {/* Message */}
+        {message && (
+          <div
+            className={`mb-4 text-sm font-medium ${message.startsWith("✅")
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
+              }`}
+          >
+            {message}
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Title */}
+          <div>
+            <label
+              htmlFor="title"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Title
+            </label>
+            <input
+              id="title"
+              type="text"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter book title"
+              required
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
+          {/* Author */}
+          <div>
+            <label
+              htmlFor="author"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Author
+            </label>
+            <input
+              id="author"
+              type="text"
+              value={formData.author}
+              onChange={handleChange}
+              placeholder="Enter author name"
+              required
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
+          {/* Genre */}
+          <div>
+            <label
+              htmlFor="genre"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Genre
+            </label>
+            <input
+              id="genre"
+              type="text"
+              value={formData.genre}
+              onChange={handleChange}
+              placeholder="Enter genre"
+              required
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
+          {/* Price */}
+          <div>
+            <label
+              htmlFor="price"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Price
+            </label>
+            <input
+              id="price"
+              type="number"
+              value={formData.price}
+              onChange={handleChange}
+              placeholder="Enter price"
+              min="0"
+              step="0.01"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
+          {/* Description */}
+          <div>
+            <label
+              htmlFor="description"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              rows="4"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Write a short description..."
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:text-white"
+            ></textarea>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex items-center justify-end space-x-3 pt-3">
+            <button
+              type="button"
+              onClick={() => navigate("/admin/books")}
+              className="text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:ring-indigo-300 ${loading
+                  ? "bg-indigo-400 cursor-not-allowed"
+                  : "bg-indigo-700 hover:bg-indigo-800"
+                }`}
+            >
+              {loading ? "Adding..." : "Add Book"}
+            </button>
+          </div>
+        </form>
       </div>
     </section>
   );
